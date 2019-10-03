@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- 簡單表單+檢查是否可送出 -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>個人表單</title>
+
+    <script>
+        //getElementById(抓取頁面上的元素)
+        function getElement(name) {
+            return document.getElementById(name);
+        }
+
+        //判斷是否可以送件
+        function Button_Submit() {
+            //抓取頁面上的checkboc1，取得是否checked
+            var isChecked = getElement('MustCheck').checked;
+            //如果是，就return true
+            if (isChecked) return true;
+            //否則就... 
+            alert('必須勾選同意!');
+            return false;
+        }
+
+        //當網頁載入完成後執行
+        window.onload = function () {
+            //hook event(在form1被submit時...)
+            getElement('form1').onsubmit = function () {
+                //呼叫 Button_Submit()
+                return Button_Submit();
+            };
+        };
+    </script>
+</head>
+
+<body>
+    <h1>個人表單 - 表單+檢查是否可送出</h1>
+    <form id="form1"
+        action="http://isbaas.azurewebsites.net/WebForms/Form2Mail.aspx?mailto=art031565@gmail.com&redirect=http://www.google.com"
+        method="POST">
+        <fieldset>
+            <legend>個人資料-<em>必填</em></legend>
+            <div>
+                <label>姓名:</label>
+                <input type="text" placeholder="請輸入姓名" id="NameField" name="NameField"> <br />
+                <label>密碼:</label>
+                <input type="password" value="xxxx" id="PwdField" name="PwdField"> <br />
+                <label>性別:</label>
+                <input type="radio" name="male" value="男"> 男
+                <input type="radio" name="male" value="女"> 女
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>個人資料-興趣</legend>
+            <div>
+                <label>興趣:</label>
+                <input type="checkbox" name="music" value="音樂"> 音樂
+                <input type="checkbox" name="sport" value="運動"> 運動
+                <input type="checkbox" name="reading" value="閱讀"> 閱讀
+                <input type="checkbox" name="movie" value="電影"> 電影
+                <br />
+                <label>專長:</label>
+                <!-- cols="40" => 40個字 ， rows="5" => 5行 -->
+                <textarea id="fieldMultiLineText" cols="40" rows="5"></textarea>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>個人資料-地址</legend>
+            <div>
+                <label>郵遞區號:</label>
+                <input type="text" id="PostalCode" name="PostalCode"> <br />
+                <label>縣市:</label>
+                <select name="city">
+                    <option value="Tapei">台北市</option>
+                    <option value="New Tapei">新北市</option>
+                    <option value="高雄市">高雄市</option>
+                    <option value="台中市">台中市</option>
+                </select>
+                <br />
+                <label>其他地址:</label>
+                 <textarea id="fieldMultiLineText" name="fieldMultiLineText" cols="30" rows="5">xxxx</textarea>
+            </div>
+        </fieldset>
+
+        <input type="checkbox" id="MustCheck" name="MustCheck"> 同意你隨便用個資...
+        <br /> <br />
+
+        <input type="reset" value="重新填寫">
+        <input type="submit" value="送出">
+        <!-- 也可以這樣寫 -->
+        <!-- <button type="submit">送出</button> -->
+        <!-- <button type="reset">重新填寫</button> -->
+    </form>
+
+</body>
+
+</html>
